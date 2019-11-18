@@ -22,7 +22,6 @@ defmodule TestappWeb do
       use Phoenix.Controller, namespace: TestappWeb
 
       import Plug.Conn
-      import TestappWeb.Gettext
       alias TestappWeb.Router.Helpers, as: Routes
     end
   end
@@ -36,8 +35,6 @@ defmodule TestappWeb do
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
 
-      import TestappWeb.ErrorHelpers
-      import TestappWeb.Gettext
       alias TestappWeb.Router.Helpers, as: Routes
     end
   end
@@ -53,7 +50,6 @@ defmodule TestappWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import TestappWeb.Gettext
     end
   end
 
