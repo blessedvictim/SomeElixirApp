@@ -10,7 +10,6 @@ defmodule Testapp.Application do
     children = [
       # Start the endpoint when the application starts
       TestappWeb.Endpoint
-      # {Redix, name: :redix, host: "80.241.209.42"}
       # Starts a worker by calling: Testapp.Worker.start_link(arg)
       # {Testapp.Worker, arg},
     ]
@@ -18,8 +17,8 @@ defmodule Testapp.Application do
     # System.get_env("REDIS_HOST") |> :logger.warning()
 
     children =
-      case System.get_env("REDIS_HOST") do
-        host when is_bitstring(host) -> children ++ [{Redix, name: :redix, host: host}]
+      case System.get_env("REDIS_URL") do
+        url when is_bitstring(url) -> children ++ [{Redix, {url, [name: :redix]}}]
         _ -> raise "Error: can't find REDIS_HOST"
       end
 
