@@ -28,9 +28,7 @@ defmodule TestappWeb.VisitController do
   def visited_links(conn, params) do
     result =
       case params do
-        %{"links" => [_ | _]} ->
-          list = Map.get(params, "links")
-
+        %{"links" => list = [_ | _]} ->
           if Enum.all?(list, &matchUrl/1) do
             case saveToRedis(list) do
               {:ok, _} ->
@@ -53,7 +51,8 @@ defmodule TestappWeb.VisitController do
     json(conn, result)
   end
 
-  def visited_domains(conn, %{"from" => from, "to" => to}) when is_number(from) and is_number(to) do
+  def visited_domains(conn, %{"from" => from, "to" => to})
+      when is_number(from) and is_number(to) do
     result =
       case getRangeFromRedis(from, to) do
         {:ok, list} ->
