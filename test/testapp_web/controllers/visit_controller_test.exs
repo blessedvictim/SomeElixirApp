@@ -21,7 +21,7 @@ defmodule TestappWeb.VisitControllerTest do
   test "Post invalid json", %{conn: conn} do
     response =
       conn
-      |> post(Routes.visit_path(conn, :post_urls))
+      |> post(Routes.visit_path(conn, :visited_links))
       |> json_response(200)
 
     assert response == %{"status" => "error", "reason" => "Invalid JSON"}
@@ -30,7 +30,7 @@ defmodule TestappWeb.VisitControllerTest do
   test "Post valid json(1 url)", %{conn: conn} do
     response =
       conn
-      |> post(Routes.visit_path(conn, :post_urls, %{"links" => ["google.ru"]}))
+      |> post(Routes.visit_path(conn, :visited_links, %{"links" => ["google.ru"]}))
       |> json_response(200)
 
     assert response == %{"status" => "ok"}
@@ -39,7 +39,7 @@ defmodule TestappWeb.VisitControllerTest do
   test "Post 1 url and get it", %{conn: conn} do
     response =
       conn
-      |> post(Routes.visit_path(conn, :post_urls, %{"links" => ["https://yandex.ru/?lol=test"]}))
+      |> post(Routes.visit_path(conn, :visited_links, %{"links" => ["https://yandex.ru/?lol=test"]}))
       |> json_response(200)
 
     assert response == %{"status" => "ok"}
@@ -64,7 +64,7 @@ defmodule TestappWeb.VisitControllerTest do
     response =
       conn
       |> post(
-        Routes.visit_path(conn, :post_urls, %{
+        Routes.visit_path(conn, :visited_links, %{
           "links" => [
             "https://yandex.ru/?lol=test",
             "funbox.ru",

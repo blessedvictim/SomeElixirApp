@@ -5,9 +5,9 @@ defmodule TestappWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", TestappWeb do
+  scope "/", TestappWeb do
     pipe_through :api
-    post "/post_json", VisitController, :post_urls
+    post "/visited_links", VisitController, :visited_links
     get "/visited_domains", VisitController, :visited_domains
   end
 end

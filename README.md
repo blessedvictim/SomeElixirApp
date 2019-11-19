@@ -1,18 +1,35 @@
-# Testapp
+# Run app 'Testapp'
 
-To start your Phoenix server:
+ # There are two ways to start this app:
 
-  * Install dependencies with `mix deps.get`
-  * Start Phoenix endpoint with `mix phx.server`
+  * ## Start app with docker-compose
+    #### requirements:
+      ```docker, docker-compose supports 3.x docker-compose format ``` 
+      ___
+      #### Run that commands
+      1. ```git clone https://github.com/blessedvictim/SomeElixirApp``` 
+      2. ```docker-compose up```
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+  * ## Manually start app with mix
+    #### requirements:
+      ```Elixir 1.9+ ,Redis 5+```
+    ___
+    #### Run that commands
+      1. ```git clone https://github.com/blessedvictim/SomeElixirApp``` 
+      2. ```mix local.hex --force && mix local.rebar --force```
+      3. ```mix archive.install hex phx_new 1.4.11 --force```
+      4. ```REDIS_URL='place here your REDIS url' PORT=4000 MIX_ENV=prod mix phx.server```
+___
+# Testing application
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-## Learn more
+  * ## Testing app with docker-compose
+    Same as steps in
+    >Manually start app with mix
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+    but replace step 2 cmd with ```docker-compose -f docker-compose-test.yml up ```
+  * ## Manually testing
+    Same as steps in
+    >Start app with docker-compose
+
+    but replace step 4 cmd with ```REDIS_URL='place here your REDIS url' PORT=4000 MIX_ENV=prod mix test```

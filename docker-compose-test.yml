@@ -3,9 +3,8 @@ services:
   elixirapp:
     build: .
     image: elixirapp:latest
-    command: mix phx.server
+    command: mix test
     environment:
-      MIX_ENV: prod
       PORT: 4000
       REDIS_URL: redis://redis:6379
     ports:

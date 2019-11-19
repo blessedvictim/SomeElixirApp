@@ -25,7 +25,7 @@ defmodule TestappWeb.VisitController do
     Redix.pipeline(:redix, [["multi"]] ++ cmds ++ [["persist", key], ["exec"]])
   end
 
-  def post_urls(conn, params) do
+  def visited_links(conn, params) do
     result =
       case params do
         %{"links" => [_ | _]} ->
