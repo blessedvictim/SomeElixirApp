@@ -53,7 +53,7 @@ defmodule TestappWeb.VisitController do
     json(conn, result)
   end
 
-  def visited_domains(conn, %{"from" => from, "to" => to}) do
+  def visited_domains(conn, %{"from" => from, "to" => to}) when is_number(from) and is_number(to) do
     result =
       case getRangeFromRedis(from, to) do
         {:ok, list} ->
@@ -70,7 +70,7 @@ defmodule TestappWeb.VisitController do
         {:error, reason} ->
           %{
             "status" => :error,
-            "reson" => Exception.message(reason)
+            "reason" => Exception.message(reason)
           }
       end
 
