@@ -8,6 +8,8 @@ defmodule TestappWeb.VisitControllerTest do
   end
 
   setup_all do
+    redis_cleanup()
+
     case Redix.command(:redix, ["ping"]) do
       {:ok, "PONG"} -> :ok
       _ -> raise "Redis seems to not connected!"
@@ -36,6 +38,15 @@ defmodule TestappWeb.VisitControllerTest do
     assert response == %{"status" => "ok"}
   end
 
+  test "Post 1 invalid url", %{conn: conn} do
+    response =
+      conn
+      |> post(Routes.visit_path(conn, :visited_links, %{"links" => ["https://yandexru/?lol=test"]}))
+      |> json_response(200)
+
+    assert response == %{"status" => "error", "reason" => "Not valid url in links"}
+  end
+
   test "Post 1 url and get it", %{conn: conn} do
     response =
       conn
@@ -46,11 +57,11 @@ defmodule TestappWeb.VisitControllerTest do
 
     end_time = DateTime.utc_now() |> DateTime.to_unix()
 
+    %{"from" => @start_time, "to" => end_time} |> IO.inspect
+
     response =
       conn
-      |> get(
-        Routes.visit_path(conn, :visited_domains, %{"from" => @start_time, "to" => end_time})
-      )
+      |> get(Routes.visit_path(conn, :visited_domains, %{"from" => @start_time, "to" => end_time}))
       |> json_response(200)
 
     assert response == %{
@@ -59,7 +70,6 @@ defmodule TestappWeb.VisitControllerTest do
            }
   end
 
-  ## How to test bad routes !?!?!?!
   test "Get urls", %{conn: conn} do
     response =
       conn
@@ -85,7 +95,9 @@ defmodule TestappWeb.VisitControllerTest do
 
     response =
       conn
-      |> get(Routes.visit_path(conn, :visited_domains, %{"from" => @start_time, "to" => end_time}))
+      |> get(
+        Routes.visit_path(conn, :visited_domains, %{"from" => @start_time, "to" => end_time})
+      )
       |> json_response(200)
 
     right_response_domains = ["yandex.ru", "funbox.ru", "youtube.com", "hexdocs.pm"]
