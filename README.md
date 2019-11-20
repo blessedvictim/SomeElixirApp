@@ -26,11 +26,11 @@ ___
 
   * ## Testing app with docker-compose
     Same as steps in
-    >Manually start app with mix
+    >Start app with docker-compose
 
     but replace step 2 cmd with ```docker-compose -f docker-compose-test.yml up ```
   * ## Manually testing
     Same as steps in
-    >Start app with docker-compose
+    >Manually start app with mix
 
-    but replace step 5 cmd with ```REDIS_URL='place here your REDIS url' PORT=4000 MIX_ENV=prod mix test```
+    but replace step 5 cmd with ```REDIS_URL='place here your REDIS url' PORT=4000 mix test```
